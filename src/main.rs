@@ -2,7 +2,7 @@ use std::io;
 use rand::Rng;
 use std::cmp::Ordering;
 
-fn main() {
+fn guess_game() {
     println!("Guess the number!");
 
     let secret_number = rand::thread_rng().gen_range(1, 101);
@@ -32,4 +32,24 @@ fn main() {
             }
         }
     }
+}
+
+pub fn gen(x : &mut u32) -> bool {
+    let secret_number = rand::thread_rng().gen_range(0, 2);
+    //println!("secrect num: {}", secret_number);
+    *x += 1;
+    return secret_number == 0;
+}
+
+fn main(){
+    let mut n = 0;
+    for _ in 0..10000 {
+        let mut x = 0;
+        while gen(&mut x) {
+            //println!("this gen: {}", x);
+        }
+        n += x;
+    } 
+
+    println!("get total {}, avg: {}", n, n / 10000);
 }
