@@ -1,7 +1,8 @@
 use std::io;
 use rand::Rng;
-use std::cmp::Ordering;
-
+//use std::cmp::Ordering;
+use std::env;
+/*
 fn guess_game() {
     println!("Guess the number!");
 
@@ -33,7 +34,7 @@ fn guess_game() {
         }
     }
 }
-
+*/
 pub fn gen(x : &mut u32) -> bool {
     let secret_number = rand::thread_rng().gen_range(0, 2);
     //println!("secrect num: {}", secret_number);
@@ -42,14 +43,23 @@ pub fn gen(x : &mut u32) -> bool {
 }
 
 fn main(){
-    let mut n = 0;
-    for _ in 0..10000 {
+    let mut n = 0.0;
+    let mut cycle = 10000;
+
+    let args: Vec<String> = env::args().collect();
+    println!("{:?}", args);
+
+    if args.len() > 1 {
+        cycle = args[1].parse().unwrap_or(0);
+    }
+
+    for _ in 0..cycle {
         let mut x = 0;
         while gen(&mut x) {
             //println!("this gen: {}", x);
         }
-        n += x;
+        n += x as f32;
     } 
 
-    println!("get total {}, avg: {}", n, n / 10000);
+    println!("get total {}, avg: {}", n, n / cycle as f32);
 }
